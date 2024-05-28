@@ -78,10 +78,8 @@ const Alarms = () => {
     }
 
     useEffect(() => {
-        if(alarm && !alarm.length)
-            dispatch(getAlarmsById(id))
-        // eslint-disable-next-line
-    }, [id])
+        dispatch(getAlarmsById(id))
+    }, [dispatch, id])
 
     return (
         <React.Fragment>

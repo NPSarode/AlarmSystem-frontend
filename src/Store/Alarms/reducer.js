@@ -1,9 +1,11 @@
-import { ADD_ALARM_FAIL, ADD_ALARM_SUCCESS, DELETE_ALARM_FAIL, DELETE_ALARM_SUCCESS, GET_ALARM_BY_ID_FAIL, GET_ALARM_BY_ID_SUCCESS, GET_ALARM_TYPES_FAIL, GET_ALARM_TYPES_SUCCESS, UPDATE_ALARM_FAIL, UPDATE_ALARM_SUCCESS } from "./actionTypes";
+import { ADD_ALARM_FAIL, ADD_ALARM_SUCCESS, DELETE_ALARM_FAIL, DELETE_ALARM_SUCCESS, GET_ACTIVE_ALARMS_FAIL, GET_ACTIVE_ALARMS_SUCCESS, GET_ALARM_BY_ID_FAIL, GET_ALARM_BY_ID_SUCCESS, GET_ALARM_HISTORY_SUCCESS, GET_ALARM_TYPES_FAIL, GET_ALARM_TYPES_SUCCESS, UPDATE_ALARM_FAIL, UPDATE_ALARM_SUCCESS } from "./actionTypes";
 
 const initialState = {
     error: {},
     alarm: [],
     alarm_types: [],
+    active_alarms: [],
+    alarm_history: [],
   }
 
 const alarmReducer = (state = initialState, action) => {
@@ -73,6 +75,30 @@ const alarmReducer = (state = initialState, action) => {
             error: {}
         }
         case GET_ALARM_TYPES_FAIL: 
+        return {
+            ...state,
+            error: action.payload
+        }
+        
+        case GET_ACTIVE_ALARMS_SUCCESS: 
+        return {
+            ...state,
+            active_alarms: action.payload,
+            error: {}
+        }
+        case GET_ACTIVE_ALARMS_FAIL: 
+        return {
+            ...state,
+            error: action.payload
+        }
+        
+        case GET_ALARM_HISTORY_SUCCESS: 
+        return {
+            ...state,
+            alarm_history: action.payload,
+            error: {}
+        }
+        case GET_ALARM_HISTORY_SUCCESS: 
         return {
             ...state,
             error: action.payload

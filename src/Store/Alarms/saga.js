@@ -1,8 +1,8 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { AddAlarmFail, AddAlarmSuccess, UpdateAlarmFail, UpdateAlarmSuccess, deleteAlarmFail, deleteAlarmSuccess, getAlarmTypesFail, getAlarmTypesSuccess, getAlarmsByIdFail, getAlarmsByIdSuccess } from "./action";
-import { addAlarm, deleteAlarm, getAlarmById, getAlarmTypes, updateAlarm } from "../../Helper/backendHelper";
-import { ADD_ALARM, DELETE_ALARM, GET_ALARM_BY_ID, GET_ALARM_TYPES, UPDATE_ALARM } from "./actionTypes";
+import { AddAlarmFail, AddAlarmSuccess, UpdateAlarmFail, UpdateAlarmSuccess, deleteAlarmFail, deleteAlarmSuccess, getActiveAlarmsFail, getActiveAlarmsSuccess, getAlarmHistoryFail, getAlarmHistorySuccess, getAlarmTypesFail, getAlarmTypesSuccess, getAlarmsByIdFail, getAlarmsByIdSuccess } from "./action";
+import { addAlarm, deleteAlarm, getActiveAlarm, getAlarmById, getAlarmHistory, getAlarmTypes, updateAlarm } from "../../Helper/backendHelper";
+import { ADD_ALARM, DELETE_ALARM, GET_ACTIVE_ALARMS, GET_ALARM_BY_ID, GET_ALARM_HISTORY, GET_ALARM_TYPES, UPDATE_ALARM } from "./actionTypes";
 
 
 function* onGetAlarmsById({ payload: id }) {
@@ -51,6 +51,24 @@ function* onUpdateAlarm({payload: data}) {
   }
 }
 
+function* onGetActiveAlarm() {
+  try {
+    const response = yield call(getActiveAlarm);
+    yield put(getActiveAlarmsSuccess(response));
+  } catch (error) {
+    yield put(getActiveAlarmsFail(error));
+  }
+}
+
+function* onGetAlarmHistory() {
+  try {
+    const response = yield call(getAlarmHistory);
+    yield put(getAlarmHistorySuccess(response));
+  } catch (error) {
+    yield put(getAlarmHistoryFail(error));
+  }
+}
+
 
 function* alarmSaga() {
   yield takeEvery(GET_ALARM_BY_ID, onGetAlarmsById);
@@ -58,6 +76,8 @@ function* alarmSaga() {
   yield takeEvery(GET_ALARM_TYPES, onGetAlarmTypes);
   yield takeEvery(ADD_ALARM, onAddAlarm);
   yield takeEvery(UPDATE_ALARM, onUpdateAlarm);
+  yield takeEvery(GET_ACTIVE_ALARMS, onGetActiveAlarm);
+  yield takeEvery(GET_ALARM_HISTORY, onGetAlarmHistory);
 }
 
 export default alarmSaga;

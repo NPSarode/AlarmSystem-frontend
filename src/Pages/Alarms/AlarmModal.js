@@ -28,11 +28,12 @@ const AlarmModal = ({ modal, toggle, data, setData }) => {
     initialValues: {
       name: data && data.name,
       description: data && data.description,
-      user_names: data && data.user_names,
+      notification_list: data && data.notification_list,
       status: data && data.status || true,
       machine_id: id,
       alarm_type_id: data && data.alarm_type_id,
       value: data && data.value,
+      threshold_value: data && data.threshold_value,
     },
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Name is required"),
@@ -43,9 +44,9 @@ const AlarmModal = ({ modal, toggle, data, setData }) => {
       console.log(values);
 
       if (data.id) {
-        dispatch(UpdateAlarm({...values, id: data.id}))
+        dispatch(UpdateAlarm({...values, id: data.id, notification_list: values.notification_list}))
       } else {
-        dispatch(AddAlarm(values))
+        dispatch(AddAlarm({...values, notification_list: values.notification_list}))
       }
 
       setData({});
@@ -133,7 +134,7 @@ const AlarmModal = ({ modal, toggle, data, setData }) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3 bg bg-secondary p-1 bg-opacity-10">
-                <Label>Alarm Defination</Label>
+                <Label>Alarm Definition</Label>
                 <Input
                   type="select"
                   rows={3}
@@ -147,14 +148,14 @@ const AlarmModal = ({ modal, toggle, data, setData }) => {
                       ? true
                       : false
                   }
-                  defaultValue={validation.values.alarm_type_id}
+                  // defaultValue={validation.values.alarm_type_id}
                 >
                   <option defaultValue={null} defaultChecked hidden>
-                    Choose Alarm Defination...
+                    Choose Alarm Definition...
                   </option>
                   {alarm_types.map((data, i) => {
                     return (
-                      <option value={data.id} key={i}>
+                      <option value={data.id} key={i} selected={data.id == validation.values.alarm_type_id}>
                         {data.name}
                       </option>
                     );
@@ -173,41 +174,17 @@ const AlarmModal = ({ modal, toggle, data, setData }) => {
                 <Label>Actual Value</Label>
                 <Input
                   type="number"
-                  name="user_names"
-                  defaultValue={validation.values.user_names}
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  invalid={
-                    validation.touched.user_names &&
-                    validation.errors.user_names
-                      ? true
-                      : false
-                  }
-                  placeholder="Enter Actual Value..."
-                />
-              </div>
-              {validation.touched.user_names && validation.errors.user_names ? (
-                <FormFeedback type="invalid">
-                  {validation.errors.user_names}
-                </FormFeedback>
-              ) : null}
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3 bg bg-secondary p-1 bg-opacity-10">
-                <Label>Threshold Value</Label>
-                <Input
-                  type="number"
                   name="value"
                   defaultValue={validation.values.value}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   invalid={
-                    validation.touched.value && validation.errors.value
+                    validation.touched.value &&
+                    validation.errors.value
                       ? true
                       : false
                   }
-                  placeholder="Enter Threshold Value..."
-                  disabled={data.id}
+                  placeholder="Enter Actual Value..."
                 />
               </div>
               {validation.touched.value && validation.errors.value ? (
@@ -216,38 +193,62 @@ const AlarmModal = ({ modal, toggle, data, setData }) => {
                 </FormFeedback>
               ) : null}
             </Col>
+            <Col lg={4}>
+              <div className="mb-3 bg bg-secondary p-1 bg-opacity-10">
+                <Label>Threshold Value</Label>
+                <Input
+                  type="number"
+                  name="threshold_value"
+                  defaultValue={validation.values.threshold_value}
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  invalid={
+                    validation.touched.threshold_value && validation.errors.threshold_value
+                      ? true
+                      : false
+                  }
+                  placeholder="Enter Threshold Value..."
+                  disabled={data.id}
+                />
+              </div>
+              {validation.touched.threshold_value && validation.errors.threshold_value ? (
+                <FormFeedback type="invalid">
+                  {validation.errors.threshold_value}
+                </FormFeedback>
+              ) : null}
+            </Col>
             <Col lg={12}>
               <div className="mb-3 bg bg-secondary p-1 bg-opacity-10">
                 <Label>Set Notifications To</Label>
                 <Input
                   type="select"
-                  name="user_names"
+                  name="notification_list"
                   placeholder="Enter Receiver Email ID..."
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   invalid={
-                    validation.touched.user_names &&
-                    validation.errors.user_names
+                    validation.touched.notification_list &&
+                    validation.errors.notification_list
                       ? true
                       : false
                   }
-                  defaultValue={validation.values.user_names}
+                  defaultValue={validation.values.notification_list}
                 >
                   <option defaultValue={null} defaultChecked hidden>
                     Choose User...
                   </option>
                   {users.map((data, i) => {
                     return (
-                      <option value={data.full_name} key={i}>
+                      <option value={data.id} key={i}>
                         {data.full_name}
                       </option>
                     );
                   })}
                 </Input>
               </div>
-              {validation.touched.user_names && validation.errors.user_names ? (
+              {validation.touched.notification_list && validation.errors.notification_list ? (
                 <FormFeedback type="invalid">
-                  {validation.errors.user_names}
+                  {validation.errors.notification_list}
                 </FormFeedback>
               ) : null}
             </Col>

@@ -2,23 +2,29 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from 'reactstrap'
-import { getMachines as onGetMachines } from "../../Store/actions";
+import { getActiveAlarms, getMachines as onGetMachines } from "../../Store/actions";
 
 const Machines = () => {
 
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { machines } = useSelector( state => state.machineReducer);
+  const { machines } = useSelector(state => state.machineReducer);
+  const { active_alarms } = useSelector(state => state.alarmReducer);
 
   const onMachineClick = (data) => {
     navigate(`/alarms/${data.id}`)
   }
 
   useEffect(() => {
-    if(machines && !machines.length)
+    if (machines && !machines.length)
       dispatch(onGetMachines())
   }, [dispatch, machines])
+
+  useEffect(() => {
+    if (active_alarms && !active_alarms.length)
+      dispatch(getActiveAlarms())
+  }, [dispatch, active_alarms])
 
   return (
     <React.Fragment>
@@ -46,10 +52,10 @@ const Machines = () => {
                                 </CardHeader>
                                 <CardBody>
                                   <div
-                                  style={{
-                                    minHeight: '15vh',
-                                    overflow: 'hidden'
-                                  }}>
+                                    style={{
+                                      minHeight: '15vh',
+                                      overflow: 'hidden'
+                                    }}>
                                     {data.description}
                                   </div>
                                 </CardBody>
@@ -88,12 +94,29 @@ const Machines = () => {
                   </CardHeader>
                   <CardBody>
                     {
-                      machines.map((data, i) => {
+                      active_alarms.map((data, i) => {
                         return <Row key={i}>
                           <Col key={i} lg={12} sm={12}>
                             <div className='border border-danger p-3 rounded my-2 text-muted'>
-                            <i className='alarmIcon bx bxs-bell-ring me-2 text-danger'></i>
-                              {data.name}
+                            <Row>
+                              <Col lg={1}>
+                              <i className='alarmIcon bx bxs-bell-ring me-2 text-danger'></i>
+                              </Col>
+                              <Col lg={11}>
+                              <Row>
+                                <Col lg={12}>
+                                <div className='fw-bolder' style={{fontSize: '0.6rem'}}>
+                                {data.machine_name}
+                                </div>
+                                </Col>
+                                <Col lg={12}>
+                                  <div>
+                                  {data.alarm_name}
+                                  </div>
+                                </Col>
+                              </Row>
+                              </Col>
+                            </Row>
                             </div>
                           </Col>
                         </Row>

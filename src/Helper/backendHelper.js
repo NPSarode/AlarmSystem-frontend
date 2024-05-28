@@ -7,6 +7,8 @@ export const deleteAlarm = id => del(url.DELETE_ALARM + `/${id}`)
 export const getAlarmTypes = () => get(url.GET_ALARM_TYPES)
 export const addAlarm = (data) => post(url.ADD_ALARM, data)
 export const updateAlarm = (data) => put(url.UPDATE_ALARM, data)
+export const getActiveAlarm = () => get(url.GET_ACTIVE_ALARM)
+export const getAlarmHistory = () => get(url.GET_ALARM_HISTORY)
 
 
 export const getMachines = () => get(url.GET_MACHINES)

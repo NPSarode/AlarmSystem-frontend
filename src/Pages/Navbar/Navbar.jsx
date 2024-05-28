@@ -17,6 +17,10 @@ const pages = [
         link: '/'
     },
     {
+        name: "History",
+        link: '/alarm_history'
+    },
+    {
         name: "Users",
         link: '/users'
     },
