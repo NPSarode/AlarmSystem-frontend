@@ -5,7 +5,7 @@ const initialState = {
     alarm: [],
     alarm_types: [],
     active_alarms: [],
-    alarm_history: [],
+    alarm_history: [], 
   }
 
 const alarmReducer = (state = initialState, action) => {
