@@ -1,24 +1,25 @@
-import logo from './logo.svg';
+import React from 'react';
+import Alarms from './Pages/Alarms/index';
+import Machines from './Pages/Machines/index';
+
+
+// Import scss
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Navbar from './Pages/Navbar/Navbar';
+import Users from './Pages/Users';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Navbar/>
+      <Routes>
+        <Route path={'/'} element={<Machines/>}/>
+        <Route path={'/alarms/:id'} element={<Alarms/>}/>
+        <Route path={'/users'} element={<Users/>}/>
+      </Routes>
+    </React.Fragment>
   );
 }
 
