@@ -53,8 +53,8 @@ const alarmReducer = (state = initialState, action) => {
         case UPDATE_ALARM_SUCCESS: 
         return {
             ...state,
-            alarm: state.alarm.filter(data => {
-                if(data.id === action.payload) {
+            alarm: state.alarm.map(data => {
+                if(data.id == action.payload.id) {
                     return action.payload
                 } else {
                     return data

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const AxiosApi = axios.create();
 
-AxiosApi.defaults.baseURL = 'http://localhost:5000'
+AxiosApi.defaults.baseURL = process.env.REACT_APP_BACKEND_URI
 
 export const get = async (url, config) => {
 

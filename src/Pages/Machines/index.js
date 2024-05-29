@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from 'reactstrap'
-import { getActiveAlarms, getMachines as onGetMachines } from "../../Store/actions";
+import { getActiveAlarms as onGetActiveAlarms, getMachines as onGetMachines } from "../../Store/actions";
 
 const Machines = () => {
 
@@ -17,14 +17,12 @@ const Machines = () => {
   }
 
   useEffect(() => {
-    if (machines && !machines.length)
       dispatch(onGetMachines())
-  }, [dispatch, machines])
+  }, [])
 
   useEffect(() => {
-    if (active_alarms && !active_alarms.length)
-      dispatch(getActiveAlarms())
-  }, [dispatch, active_alarms])
+      dispatch(onGetActiveAlarms())
+  }, [])
 
   return (
     <React.Fragment>
@@ -44,7 +42,7 @@ const Machines = () => {
                           <CardBody>
                             <div>
                               <div id='machineImage'>
-                                <img src={data.image || 'https://st.depositphotos.com/2166177/2245/i/450/depositphotos_22451193-stock-photo-cog-wheels.jpg'} alt='machine' />
+                                <img src={data.image} alt='machine' />
                               </div>
                               <div id='machineData'>
                                 <CardHeader tag={'h5'} className='text-muted bg-transparent'>
@@ -96,16 +94,16 @@ const Machines = () => {
                     {
                       active_alarms.map((data, i) => {
                         return <Row key={i}>
-                          <Col key={i} lg={12} sm={12}>
-                            <div className='border border-danger p-3 rounded my-2 text-muted'>
+                          <Col key={i} lg={12} sm={12} onClick={() => {navigate(`alarms/${data.id}`)}}>
+                            <div className='border border-danger p-3 rounded my-2 text-muted activeAlarms'>
                             <Row>
-                              <Col lg={1}>
-                              <i className='alarmIcon bx bxs-bell-ring me-2 text-danger'></i>
+                              <Col lg={1} className='d-flex justify-content-center align-items-center mx-auto'>
+                                  <i className='alarmIcon bx bxs-bell-ring me-2 text-danger'></i>
                               </Col>
-                              <Col lg={11}>
+                              <Col lg={10}>
                               <Row>
                                 <Col lg={12}>
-                                <div className='fw-bolder' style={{fontSize: '0.6rem'}}>
+                                <div className='fw-bolder' style={{fontSize: '0.7rem', textDecoration:'underline'}}>
                                 {data.machine_name}
                                 </div>
                                 </Col>

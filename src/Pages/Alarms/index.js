@@ -28,8 +28,8 @@ const Alarms = () => {
             Cell: cellProp => {
                 const data = cellProp.cell.row.original
 
-                return <span className={`d-flex justify-content-center align-items-center rounded p-1 border bg bg-opacity-10 ${data.status ? 'text-success border-success bg-success' : 'text-danger border-danger bg-danger'}`}>
-                    {data.status ? "Active" : "InActive"}
+                return <span className={`d-flex justify-content-center align-items-center rounded p-1 border bg bg-opacity-10 ${!data.status ? 'text-success border-success bg-success' : 'text-danger border-danger bg-danger'}`}>
+                    {data.status ? "Active" : "Inactive"}
                 </span>
             }
         },

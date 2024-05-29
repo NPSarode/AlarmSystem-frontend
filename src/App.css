@@ -13,7 +13,7 @@
   left: 50%;
   cursor: pointer;
   transform: translate(-50%, -40%);
-  width: 60%;
+  width: 70%;
   border-radius: 10px;
   box-shadow: 3px 6px 10px #0004;
   transition: .3s ease-in-out;
@@ -38,6 +38,14 @@
   align-items: center;
 
   transform: translate(0%, 50%);
+}
+
+.activeAlarms {
+  transition: 1s ease-in-out;
+}
+
+.activeAlarms:hover {
+  background: linear-gradient(to left, #FF204E44, #A0153E11, #FF204E44);
 }
 
 .alarmIcon {
@@ -72,4 +80,19 @@
   100% {
     transform: translateY(0) rotate(0)
   }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #FF204E, #A0153E88); 
+  border-radius: 20px;
 }
