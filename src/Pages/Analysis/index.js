@@ -28,7 +28,7 @@ const Analysis = () => {
   const columns = useMemo(
     () => [
       { Header: "Alarm Name", accessor: "alarm_name" },
-      { Header: "Alarm Generated At", accessor: "created_at" },
+      { Header: "Alarm Generated At", accessor: "created_at", Cell: (data) => data.created_at.split(".")[0]},
     ],
     []
   );
@@ -36,12 +36,12 @@ const Analysis = () => {
   useEffect(() => {
     if (alarm_count && !alarm_count.length) 
         dispatch(getAlarmCount());
-  }, [dispatch]);
+  }, [dispatch, alarm_count]);
 
   useEffect(() => {
     if (machines && !machines.length) 
         dispatch(getMachines());
-  }, [dispatch]);
+  }, [dispatch, machines]);
 
   useEffect(() => {
     if (machineId) {

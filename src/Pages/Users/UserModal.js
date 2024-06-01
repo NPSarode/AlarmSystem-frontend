@@ -15,7 +15,7 @@ const UserModal = ({ modal, toggle }) => {
     return (
         <Modal
             isOpen={modal}
-            size='lg'
+            size='md'
             centered>
             <ModalHeader tag={'h5'} toggle={() => toggle(!modal)}>
                 ADD New User
@@ -29,7 +29,7 @@ const UserModal = ({ modal, toggle }) => {
                     return
                 }}>
                     <Row>
-                        <Col lg={6}>
+                        <Col lg={12}>
                             <div className='mb-3 bg bg-secondary p-1 bg-opacity-10'>
                                 <Label>
                                     First Name
@@ -42,7 +42,7 @@ const UserModal = ({ modal, toggle }) => {
                                 />
                             </div>
                         </Col>
-                        <Col lg={6}>
+                        <Col lg={12}>
                             <div className='mb-3 bg bg-secondary p-1 bg-opacity-10'>
                                 <Label>
                                     Last Name

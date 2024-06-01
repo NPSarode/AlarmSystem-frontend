@@ -18,11 +18,11 @@ const Machines = () => {
 
   useEffect(() => {
       dispatch(onGetMachines())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
       dispatch(onGetActiveAlarms())
-  }, [])
+  }, [dispatch])
 
   return (
     <React.Fragment>

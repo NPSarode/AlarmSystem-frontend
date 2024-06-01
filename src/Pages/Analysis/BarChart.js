@@ -43,7 +43,6 @@ const BarChart = ({data, chartId, width, height}) => {
     var xAxis = chart.xAxes.push(
       am5xy.CategoryAxis.new(root, {
         maxDeviation: 0.3,
-        // categoryField: "alarm_name",
         categoryField: "alarm_name",
         renderer: xRenderer,
         tooltip: am5.Tooltip.new(root, {}),
