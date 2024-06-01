@@ -1,8 +1,8 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { AddAlarmFail, AddAlarmSuccess, UpdateAlarmFail, UpdateAlarmSuccess, deleteAlarmFail, deleteAlarmSuccess, getActiveAlarmsFail, getActiveAlarmsSuccess, getAlarmHistoryFail, getAlarmHistorySuccess, getAlarmTypesFail, getAlarmTypesSuccess, getAlarmsByIdFail, getAlarmsByIdSuccess } from "./action";
-import { addAlarm, deleteAlarm, getActiveAlarm, getAlarmById, getAlarmHistory, getAlarmTypes, updateAlarm } from "../../Helper/backendHelper";
-import { ADD_ALARM, DELETE_ALARM, GET_ACTIVE_ALARMS, GET_ALARM_BY_ID, GET_ALARM_HISTORY, GET_ALARM_TYPES, UPDATE_ALARM } from "./actionTypes";
+import { AddAlarmFail, AddAlarmSuccess, UpdateAlarmFail, UpdateAlarmSuccess, deleteAlarmFail, deleteAlarmSuccess, getActiveAlarmsFail, getActiveAlarmsSuccess, getAlarmCountFail, getAlarmCountSuccess, getAlarmHistoryFail, getAlarmHistoryLogFail, getAlarmHistoryLogSuccess, getAlarmHistorySuccess, getAlarmTypesByIdFail, getAlarmTypesByIdSuccess, getAlarmTypesFail, getAlarmTypesSuccess, getAlarmsByIdFail, getAlarmsByIdSuccess } from "./action";
+import { addAlarm, deleteAlarm, getActiveAlarm, getAlarmById, getAlarmCount, getAlarmHistory, getAlarmHistoryLog, getAlarmTypes, getAlarmTypesById, updateAlarm } from "../../Helper/backendHelper";
+import { ADD_ALARM, DELETE_ALARM, GET_ACTIVE_ALARMS, GET_ALARM_BY_ID, GET_ALARM_COUNTS, GET_ALARM_HISTORY, GET_ALARM_LOG_HISTORY, GET_ALARM_TYPES, GET_TOTAL_ALARM_TYPES_BY_ID, UPDATE_ALARM } from "./actionTypes";
 
 
 function* onGetAlarmsById({ payload: id }) {
@@ -69,6 +69,33 @@ function* onGetAlarmHistory() {
   }
 }
 
+function* onGetAlarmCount() {
+  try {
+    const response = yield call(getAlarmCount);
+    yield put(getAlarmCountSuccess(response));
+  } catch (error) {
+    yield put(getAlarmCountFail(error));
+  }
+}
+
+function* onGetAlarmTypesById({payload: id}) {
+  try {
+    const response = yield call(getAlarmTypesById, id);
+    yield put(getAlarmTypesByIdSuccess(response));
+  } catch (error) {
+    yield put(getAlarmTypesByIdFail(error));
+  }
+}
+
+function* onGetAlarmHistoryLogSummary({payload: id}) {
+  try {
+    const response = yield call(getAlarmHistoryLog, id);
+    yield put(getAlarmHistoryLogSuccess(response));
+  } catch (error) {
+    yield put(getAlarmHistoryLogFail(error));
+  }
+}
+
 
 function* alarmSaga() {
   yield takeEvery(GET_ALARM_BY_ID, onGetAlarmsById);
@@ -78,6 +105,9 @@ function* alarmSaga() {
   yield takeEvery(UPDATE_ALARM, onUpdateAlarm);
   yield takeEvery(GET_ACTIVE_ALARMS, onGetActiveAlarm);
   yield takeEvery(GET_ALARM_HISTORY, onGetAlarmHistory);
+  yield takeEvery(GET_ALARM_COUNTS, onGetAlarmCount);
+  yield takeEvery(GET_TOTAL_ALARM_TYPES_BY_ID, onGetAlarmTypesById);
+  yield takeEvery(GET_ALARM_LOG_HISTORY, onGetAlarmHistoryLogSummary);
 }
 
 export default alarmSaga;

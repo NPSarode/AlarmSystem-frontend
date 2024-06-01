@@ -9,6 +9,9 @@ export const addAlarm = (data) => post(url.ADD_ALARM, data)
 export const updateAlarm = (data) => put(url.UPDATE_ALARM, data)
 export const getActiveAlarm = () => get(url.GET_ACTIVE_ALARM)
 export const getAlarmHistory = () => get(url.GET_ALARM_HISTORY)
+export const getAlarmCount = () => get(url.GET_ALARM_COUNTS)
+export const getAlarmTypesById = (id) => get(url.GET_TOTAL_ALARM_TYPES_BY_ID + `/${id}`)
+export const getAlarmHistoryLog = (id) => get(url.GET_ALARM_LOG_HISTORY + `/${id}`)
 
 
 export const getMachines = () => get(url.GET_MACHINES)

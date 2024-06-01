@@ -48,7 +48,7 @@ const AlarmHistory = () => {
                 <TableContainer
                   columns={columns}
                   data={alarm_history}
-                  customPageSize={10}
+                  customPageSize={15}
                 />
               </Col>
             </Row>

@@ -27,7 +27,7 @@ const Machines = () => {
   return (
     <React.Fragment>
       <Container fluid className='p-0'>
-        <Card>
+        <Card >
           <CardHeader tag={'h3'} className='bg-transparent'>
             Machines
           </CardHeader>
